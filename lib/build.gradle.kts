@@ -12,6 +12,7 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 
+    signing
     `maven-publish`
 
     id("com.diffplug.spotless") version "6.25.0"
@@ -60,6 +61,29 @@ spotless {
     }
 }
 
+val commonPom: MavenPom.() -> Unit = {
+    name.set("Behavior Tree")
+    description.set("Behavior tree based on rust's bonzai crate")
+    url.set("https://github.com/Jugbot/scala-behavior-tree")
+    licenses {
+        license {
+            name.set("MIT License")
+            url.set("https://opensource.org/licenses/MIT")
+        }
+    }
+    scm {
+        url.set("https://github.com/Jugbot/scala-behavior-tree")
+    }
+
+    developers {
+        developer {
+            id.set("Jugbot")
+            name.set("Lucas Pollice")
+            email.set("lucas.pollice@nyu.edu")
+        }
+    }
+}
+
 publishing {
     repositories {
         maven {
@@ -70,11 +94,26 @@ publishing {
                 password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
             }
         }
-    }
-    publications {
-        register<MavenPublication>("gpr") {
-            artifactId = "behavior-tree"
-            from(components["java"])
+        maven {
+            name = "OSSRH"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = project.findProperty("ossrhUsername") as String? ?: System.getenv("MAVEN_CENTRAL_USERNAME")
+                password = project.findProperty("ossrhPassword") as String? ?: System.getenv("MAVEN_CENTRAL_PASSWORD")
+            }
         }
     }
+    publications {
+        register<MavenPublication>("default") {
+            artifactId = "behavior-tree"
+
+            from(components["java"])
+
+            pom(commonPom)
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications["default"])
 }
