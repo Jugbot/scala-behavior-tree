@@ -1,44 +1,49 @@
-# use glob syntax.
-syntax: glob
-*.ser
-*.class
-*~
-*.bak
-#*.off
-*.old
+# gradle
 
-# eclipse conf file
-.settings
-.classpath
-.project
-.manager
-.scala_dependencies
+.gradle/
+build/
+out/
+classes/
+
+# eclipse
+
+*.launch
 
 # idea
-.idea
+
+.idea/
 *.iml
+*.ipr
+*.iws
 
-# building
-target
-build
-null
-tmp*
-temp*
-dist
-test-output
-build.log
+# vscode
 
-# other scm
-.svn
-.CVS
-.hg*
+.settings/
+bin/
+.classpath
+.project
 
-# switch to regexp syntax.
-#  syntax: regexp
-#  ^\.pc/
+# macos
 
-#SHITTY output not in target directory
-build.log
+*.DS_Store
 
-# Ignore Gradle project-specific cache directory
-.gradle
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+# scala
+
+.metals/
+.bloop/
+.bsp
+.history
