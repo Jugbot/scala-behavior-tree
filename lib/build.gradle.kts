@@ -49,8 +49,6 @@ tasks.withType<ScalaCompile>().configureEach {
 }
 
 spotless {
-    // Allow building with unformatted files
-    // enforceCheck = false
     scala {
         // version and configFile, scalaMajorVersion are all optional
         scalafmt("3.7.15").configFile("../.scalafmt.conf")
