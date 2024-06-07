@@ -12,8 +12,13 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 
+    `maven-publish`
+
     id("com.diffplug.spotless") version "6.25.0"
 }
+
+group = "io.github.jugbot"
+version = "1.0-BETA"
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -52,5 +57,24 @@ spotless {
     scala {
         // version and configFile, scalaMajorVersion are all optional
         scalafmt("3.7.15").configFile("../.scalafmt.conf")
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://github.com/Jugbot/scala-behavior-tree")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        register<MavenPublication>("gpr") {
+            artifactId = "behavior-tree"
+            from(components["java"])
+        }
     }
 }

@@ -1,4 +1,4 @@
-package io.github.jugbot
+package io.github.jugbot.bt
 
 // Define the Node and its types
 sealed trait Node[A]

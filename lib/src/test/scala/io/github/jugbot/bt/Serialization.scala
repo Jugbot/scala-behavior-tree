@@ -1,11 +1,11 @@
-package io.github.jugbot
+package io.github.jugbot.bt
 
 import io.circe.syntax._
 import org.scalatest.funsuite.AnyFunSuite
 import org.junit.runner.RunWith
 import org.scalatestplus.junit.JUnitRunner
 import org.scalatest.matchers.should.Matchers
-import io.github.jugbot.{
+import io.github.jugbot.bt.{
   SelectorNode,
   state,
   Failure,
