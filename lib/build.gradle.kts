@@ -61,29 +61,6 @@ spotless {
     }
 }
 
-val commonPom: MavenPom.() -> Unit = {
-    name.set("Behavior Tree")
-    description.set("Behavior tree based on rust's bonzai crate")
-    url.set("https://github.com/Jugbot/scala-behavior-tree")
-    licenses {
-        license {
-            name.set("MIT License")
-            url.set("https://opensource.org/licenses/MIT")
-        }
-    }
-    scm {
-        url.set("https://github.com/Jugbot/scala-behavior-tree")
-    }
-
-    developers {
-        developer {
-            id.set("Jugbot")
-            name.set("Lucas Pollice")
-            email.set("lucas.pollice@nyu.edu")
-        }
-    }
-}
-
 publishing {
     repositories {
         maven {
@@ -109,11 +86,36 @@ publishing {
 
             from(components["java"])
 
-            pom(commonPom)
+            pom {
+                name.set("Behavior Tree")
+                description.set("Behavior tree based on rust's bonzai crate")
+                url.set("https://github.com/Jugbot/scala-behavior-tree")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/Jugbot/scala-behavior-tree")
+                }
+
+                developers {
+                    developer {
+                        id.set("Jugbot")
+                        name.set("Lucas Pollice")
+                        email.set("lucas.pollice@nyu.edu")
+                    }
+                }
+            }
         }
     }
 }
 
 signing {
-    sign(publishing.publications["default"])
+    useInMemoryPgpKeys(
+        findProperty("signingKey") as String? ?: System.getenv("GPG_KEY"), 
+        findProperty("signingPassword") as String? ?: System.getenv("GPG_PASSWORD")
+    )
+    sign(publishing.publications)
 }
