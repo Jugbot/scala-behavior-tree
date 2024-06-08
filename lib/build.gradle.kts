@@ -19,7 +19,7 @@ plugins {
 }
 
 group = "io.github.jugbot"
-version = "1.0-BETA"
+version = "1.0-SNAPSHOT"
 
 repositories {
     // Use Maven Central for resolving dependencies.
